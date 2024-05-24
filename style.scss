@@ -1,3 +1,143 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 a {
+    text-decoration: none;
+    color: #333;
+}
+
+.search-bar {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-bar input {
+    width: 60%;
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-bar button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin-right: 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.user-actions a, .auth-buttons a {
+    margin-right: 15px;
+    text-decoration: none;
+    color: #333;
+}
+
+.user-actions a:hover, .auth-buttons a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.product-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex: 1 1 calc(50% - 20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product-image {
+    width: 100%;
+    max-width: 150px; /* Ограничение максимальной ширины */
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.product-title {
+    margin: 10px 0;
+    font-size: 18px;
+    text-align: center;
+}
+
+.product-price {
+    font-size: 16px;
+    color: #d9534f;
+    margin: 10px 0;
+}
+
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button.remove-item-button {
+    background-color: #d9534f;
+    color: #fff;
+    margin-right: 10px;
+}
+
+button.add-to-cart-button {
+    background-color: #5cb85c;
+    color: #fff;
+}
+
+/* Новый CSS код */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -14,17 +154,55 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-header h1 {
-    margin: 0;
+header h1 a {
+    text-decoration: none;
+    color: white;
+}
+
+.search-bar {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+}
+
+.search-bar input[type="text"] {
+    width: calc(100% - 40px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.search-bar button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 10px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+    background-color: #0056b3;
 }
 
 nav ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
+    margin: 0;
+    padding: 0;
 }
 
 nav ul li {
@@ -42,17 +220,21 @@ nav ul li a:hover {
     text-decoration: underline;
 }
 
-.auth-buttons a {
-    margin-left: 10px;
+.user-actions {
+    display: flex;
+}
+
+.user-actions a, .auth-buttons a {
+    margin-right: 15px;
     text-decoration: none;
+    color: white;
     padding: 10px 20px;
     background-color: #0056b3;
-    color: white;
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
-.auth-buttons a:hover {
+.user-actions a:hover, .auth-buttons a:hover {
     background-color: #004090;
 }
 
@@ -134,96 +316,55 @@ section {
     color: white;
 }
 
-.search-bar {
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 500px;
-    position: relative;
-}
-
-.search-bar input[type="text"] {
-    width: calc(100% - 40px);
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
-}
-
-.search-bar button {
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding: 10px;
-    border: none;
-    background-color: #007BFF;
-    color: white;
-    border-radius: 0 8px 8px 0;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.search-bar button:hover {
-    background-color: #0056b3;
-}
-
-.user-actions {
-    display: flex;
-}
-
-.user-actions a {
-    margin-left: 10px;
-    text-decoration: none;
-    color: white;
-    padding: 10px 20px;
-    background-color: #0056b3;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.user-actions a:hover {
-    background-color: #004090;
-}
-
-.product-item {
-    margin-bottom: 20px;
+.izbrannoe-section {
     padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
-
-.product-item:hover {
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-}
-
-.product-item img {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-.product-item h3 {
-    margin: 0;
-    font-size: 18px;
-}
-
-.product-item p {
-    margin: 0;
-    font-size: 16px;
-    color: #888;
-}
-
-.product-item button {
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
+    background-color: #fff;
     border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.product-item button:hover {
-    background-color: #0056b3;
+.izbrannoe-items-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
+
+.izbrannoe-item {
+    display: flex;
+    width: calc(50% - 20px);
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.izbrannoe-item-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 5px;
+}
+
+.izbrannoe-item-details {
+    flex: 1;
+}
+
+.izbrannoe-item-title {
+    margin: 0 0 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.izbrannoe-item-price {
+    margin: 0 0 
+}
+    .product-image {
+        width: 100%;
+        max-width: 333px;
+        height: auto;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+    
