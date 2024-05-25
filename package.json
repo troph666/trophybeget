@@ -1,0 +1,17 @@
+{
+    "private": true,
+    "type": "commonjs",
+    "scripts": {
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production"
+    },
+    "devDependencies": {
+        "resolve-url-loader": "^5.0.0",
+        "sass": "^1.77.2",
+        "sass-loader": "^12.1.0"
+    }
+}
