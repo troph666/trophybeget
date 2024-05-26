@@ -15,12 +15,14 @@
         </div>
         <nav>
             <ul>
-                <li><a href="index.html#product-catalog">Каталог</a></li>
+            <li><a href="{{ route('catalog') }}">Каталог</a></li>
+
             </ul>
         </nav>
         <div class="user-actions">
-            <a href="cart.html">Корзина</a>
-            <a href="favorites.html">Избранное</a>
+        <a href="/" onclick="showSection('product-catalog');">Каталог</a>
+        <a href="/cart" onclick="showSection('login-registration'); showCategories();">Корзина</a>
+        <a href="/izbrannoe" onclick="showSection('login-registration'); showCategories();">Избранное</a>
             <a href="#">Заказы</a>
         </div>
         <div class="auth-buttons">

@@ -13,3 +13,9 @@ Route::get('/izbrannoe', function () {
 Route::get('/cart', function () {
     return view('cart');
 });
+
+Route::get('/catalog', function () {
+    return view('catalog'); 
+})->name('catalog');
+
+

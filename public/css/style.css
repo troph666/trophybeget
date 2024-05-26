@@ -371,4 +371,26 @@ section {
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 5px;
+}
+
+.product-list, .cart-items, .izbrannoe-items-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product-item, .cart-item, .izbrannoe-item {
+  border: 1px solid #ccc;
+  margin: 10px;
+  padding: 10px;
+  width: calc(33% - 40px);
+  box-sizing: border-box;
+}
+
+.product-image, .cart-item-image, .izbrannoe-item-image {
+  width: 100%;
+  height: auto;
+}
+
+.add-to-cart-button, .details-button, .remove-item-button {
+  margin-top: 10px;
 }/*# sourceMappingURL=style.css.map */

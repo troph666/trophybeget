@@ -8,19 +8,20 @@
 </head>
 <body>
     <header>
-        <h1><a href="index.html">Маркет-плейс</a></h1>
+        <h1><a href="/index">Маркет-плейс</a></h1>
         <div class="search-bar">
             <input type="text" placeholder="Поиск...">
             <button type="submit">Найти</button>
         </div>
         <nav>
             <ul>
-                <li><a href="index.html#product-catalog">Каталог</a></li>
+            <li><a href="{{ route('catalog') }}">Каталог</a></li>
+
             </ul>
         </nav>
         <div class="user-actions">
-            <a href="cart.html">Корзина</a>
-            <a href="izbrannoe.html">Избранное</a>
+            <a href="/cart">Корзина</a>
+            <a href="/izbrannoe">Избранное</a>
             <a href="#">Заказы</a>
         </div>
         <div class="auth-buttons">

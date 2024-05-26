@@ -257,22 +257,22 @@ section {
     transition: transform 0.3s ease;
 }
 
-.hidden {
+    .hidden {
     display: none;
-}
+    }
 
-.auth-form, .product-form, .filter-form {
+    .auth-form, .product-form, .filter-form {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+    }
 
-.auth-form label, .product-form label, .filter-form label {
+    .auth-form label, .product-form label, .filter-form label {
     margin-bottom: 10px;
     font-size: 16px;
-}
+    }
 
-.auth-form input, .product-form input, .product-form textarea, .product-form select, .filter-form select, .filter-form button, .auth-form button {
+    .auth-form input, .product-form input, .product-form textarea, .product-form select, .filter-form select, .filter-form button, .auth-form button {
     margin-bottom: 15px;
     padding: 10px;
     border: 1px solid #ddd;
@@ -281,13 +281,13 @@ section {
     transition: all 0.3s ease;
     width: 300px;
     max-width: 100%;
-}
+    }
 
-.auth-form select {
+    .auth-form select {
     width: 318px;
-}
+    }
 
-.auth-form button, .product-form button, .filter-form button {
+    .auth-form button, .product-form button, .filter-form button {
     background-color: #007BFF;
     color: white;
     border: none;
@@ -295,13 +295,13 @@ section {
     padding: 12px 24px;
     border-radius: 8px;
     transition: background-color 0.3s ease;
-}
+    }
 
-.auth-form button:hover, .product-form button:hover, .filter-form button:hover {
+    .auth-form button:hover, .product-form button:hover, .filter-form button:hover {
     background-color: #0056b3;
-}
+    }
 
-.close-button {
+    .close-button {
     background-color: transparent;
     color: #333;
     border: 1px solid #333;
@@ -309,27 +309,27 @@ section {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
-}
+    }
 
-.close-button:hover {
+    .close-button:hover {
     background-color: #333;
     color: white;
-}
+    }
 
-.izbrannoe-section {
+    .izbrannoe-section {
     padding: 20px;
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+    }
 
-.izbrannoe-items-list {
+    .izbrannoe-items-list {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-}
+    }
 
-.izbrannoe-item {
+    .izbrannoe-item {
     display: flex;
     width: calc(50% - 20px);
     padding: 15px;
@@ -337,34 +337,51 @@ section {
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+    }
 
-.izbrannoe-item-image {
+    .izbrannoe-item-image {
     width: 100px;
     height: 100px;
     object-fit: cover;
     margin-right: 15px;
     border-radius: 5px;
-}
+    }
 
-.izbrannoe-item-details {
+    .izbrannoe-item-details {
     flex: 1;
-}
+    }
 
-.izbrannoe-item-title {
+    .izbrannoe-item-title {
     margin: 0 0 10px;
     font-size: 18px;
     color: #333;
-}
-
-.izbrannoe-item-price {
-    margin: 0 0 
-}
-    .product-image {
-        width: 100%;
-        max-width: 333px;
-        height: auto;
-        object-fit: cover;
-        border-radius: 5px;
     }
-    
+
+    .izbrannoe-item-price {
+    margin: 0 0 
+    }
+    .product-image {
+    width: 100%;
+    max-width: 333px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+    }
+    .product-list, .cart-items, .izbrannoe-items-list {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .product-item, .cart-item, .izbrannoe-item {
+        border: 1px solid #ccc;
+        margin: 10px;
+        padding: 10px;
+        width: calc(33% - 40px);
+        box-sizing: border-box;
+    }
+    .product-image, .cart-item-image, .izbrannoe-item-image {
+        width: 100%;
+        height: auto;
+    }
+    .add-to-cart-button, .details-button, .remove-item-button {
+        margin-top: 10px;
+    }
