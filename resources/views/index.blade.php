@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Маркет-плейс</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
 </head>
 <body>
-
 <header>
     <h1>Маркет-плейс</h1>
     <div class="search-bar">
@@ -20,89 +20,69 @@
         <a href="#" onclick="showSection('izbrannoe'); hideAuth();">Избранное</a>
     </div>
     <div class="auth-buttons">
-        <a href="#" onclick="showSection('login-registration');">Вход</a>
-        <a href="#" onclick="showSection('registration-form');">Регистрация</a>
+        @auth
+            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Выйти</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        @else
+            <a href="{{ route('login') }}">Вход</a>
+            <a href="{{ route('register') }}">Регистрация</a>
+        @endauth
     </div>
 </header>
-
 <main>
-    <section id="login-registration" class="auth-section hidden">
-        <h2>Вход</h2>
-        <form class="auth-form">
-            <label for="username">Логин:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Пароль:</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit" onclick="login(event)">Вход</button>
-        </form>
-        <button class="close-button" onclick="showSection('product-catalog')">Закрыть</button>
-    </section>
-
-    <section id="registration-form" class="auth-section hidden">
-        <h2>Регистрация</h2>
-        <form class="auth-form" onsubmit="register(event)">
-            <label for="reg-username">Логин:</label>
-            <input type="text" id="reg-username" name="reg-username" required>
-            <label for="reg-password">Пароль:</label>
-            <input type="password" id="reg-password" name="reg-password" required>
-            <label for="role">Роль:</label>
-            <select id="role" name="role">
-                <option value="buyer">Покупатель</option>
-                <option value="seller">Продавец</option>
-            </select>
-            <button type="submit">Регистрация</button>
-        </form>
-        <button class="close-button" onclick="showSection('product-catalog')">Закрыть</button>
-    </section>
-
-    <section id="seller-dashboard" class="dashboard hidden">
-        <h2>Личный кабинет продавца</h2>
-        <nav>
-            <ul>
-                <li><a href="#" onclick="showSellerSection('seller-products')">Мои товары</a></li>
-                <li><a href="#" onclick="showSellerSection('seller-orders')">Заказы</a></li>
-            </ul>
-        </nav>
-        <div id="seller-products" class="seller-section">
-            <h3>Мои товары</h3>
-            <form class="product-form" onsubmit="addProduct(event)">
-                <label for="product-name">Название товара:</label>
-                <input type="text" id="product-name" name="product-name" required>
-                <label for="product-description">Краткое описание:</label>
-                <textarea id="product-description" name="product-description" required></textarea>
-                <label for="product-price">Цена:</label>
-                <input type="number" id="product-price" name="product-price" required>
-                <label for="product-image">Фото:</label>
-                <input type="file" id="product-image" name="product-image" accept="image/*">
-                <label for="product-category">Категория:</label>
-                <select id="product-category" name="product-category">
-                    <option value="category1">Категория 1</option>
-                    <option value="category2">Категория 2</option>
-                    <option value="category3">Категория 3</option>
-                    <option value="category4">Категория 4</option>
-                    <option value="category5">Категория 5</option>
-                </select>
-                <button type="submit">Добавить товар</button>
-            </form>
-            <div id="seller-product-list" class="product-list"></div>
-        </div>
-        <div id="seller-orders" class="seller-section hidden">
-            <h3>Заказы</h3>
-            <div id="seller-order-list" class="order-list"></div>
-        </div>
-    </section>
-
-    <section id="buyer-dashboard" class="dashboard hidden">
-        <h2>Личный кабинет покупателя</h2>
-        <ul>
-            <li>Мои заказы</li>
-        </ul>
-    </section>
+    @auth
+        @if(Auth::user()->role == 'seller')
+            <section id="seller-dashboard" class="dashboard">
+                <h2>Личный кабинет продавца</h2>
+                <nav>
+                    <ul>
+                        <li><a href="#" onclick="showSellerSection('seller-products')">Мои товары</a></li>
+                        <li><a href="#" onclick="showSellerSection('seller-orders')">Заказы</a></li>
+                    </ul>
+                </nav>
+                <div id="seller-products" class="seller-section">
+                    <h3>Мои товары</h3>
+                    <form class="product-form" onsubmit="addProduct(event)">
+                        <label for="product-name">Название товара:</label>
+                        <input type="text" id="product-name" name="product-name" required>
+                        <label for="product-description">Краткое описание:</label>
+                        <textarea id="product-description" name="product-description" required></textarea>
+                        <label for="product-price">Цена:</label>
+                        <input type="number" id="product-price" name="product-price" required>
+                        <label for="product-image">Фото:</label>
+                        <input type="file" id="product-image" name="product-image" accept="image/*">
+                        <label for="product-category">Категория:</label>
+                        <select id="product-category" name="product-category">
+                            <option value="category1">Категория 1</option>
+                            <option value="category2">Категория 2</option>
+                            <option value="category3">Категория 3</option>
+                            <option value="category4">Категория 4</option>
+                            <option value="category5">Категория 5</option>
+                        </select>
+                        <button type="submit">Добавить товар</button>
+                    </form>
+                    <div id="seller-product-list" class="product-list"></div>
+                </div>
+                <div id="seller-orders" class="seller-section hidden">
+                    <h3>Заказы</h3>
+                    <div id="seller-order-list" class="order-list"></div>
+                </div>
+            </section>
+        @else
+            <section id="buyer-dashboard" class="dashboard">
+                <h2>Личный кабинет покупателя</h2>
+                <ul>
+                    <li>Мои заказы</li>
+                </ul>
+            </section>
+        @endif
+    @endauth
     
     <section id="product-catalog" class="catalog">
         <h2>Каталог товаров</h2>
         <form class="filter-form" onsubmit="filterProducts(event)">
-
             <label for="category-filter">Категория:</label>
             <select id="category-filter" name="category-filter">
                 <option value="all">Все</option>
@@ -114,7 +94,6 @@
             </select>
             <button type="submit">Фильтровать</button>
         </form>
-    <div id="product-list" class="product-list">
     <div id="product-list" class="product-list">
     <div class="product-item" data-id="1" data-category="category1">
                 <img src="img/6997180321.webp" alt="Лакомство PERFECT FIT IMMUNITY" class="product-image">
@@ -338,8 +317,7 @@
                 <h3 class="product-title">${product.name}</h3>
                 <p class="product-description">${product.description}</p>
                 <p class="product-price">Цена: ${product.price} ₽</p>
-                <button class="add-to-cart-button" onclick="addToCart(${product.id}, '${product.name}', ${product.price})">Добавить в корзину</button>
-            `;
+                <button class="add-to-cart-button" onclick="addToCart(${product.id}, '${product.name}', ${product.price})">Добавить в корзину</button>`;
             showSection('product-details');
         }
     }
@@ -357,12 +335,17 @@
         }
     });
 }
+function login(event) {
+    event.preventDefault();
+}
 
-
+function register(event) {
+    event.preventDefault();
+}
     function checkout() {
         alert('Ваш заказ оформлен!');
         clearCart();
-    }
+    }   
 </script>
 </body>
 </html>
