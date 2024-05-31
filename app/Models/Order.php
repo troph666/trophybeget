@@ -2,17 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    use HasFactory;
-
-    // Ваши свойства и методы
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    // Здесь ваш код для модели Order
 }
+
