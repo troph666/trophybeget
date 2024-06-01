@@ -5,32 +5,78 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
+    use AuthenticatesUsers;
+
+    /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/';
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // Удалите эту строку, так как middleware не требуется в контроллере
+    }
+
+    /**
+     * Get the post login redirect path.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return string
+     */
+    protected function redirectTo()
+    {
+        return '/';
+    }
+
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\View\View
+     */
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $this->validateLogin($request);
 
-        if (Auth::attempt($credentials)) {
-            
-            return redirect()->intended('/');
+        if ($this->attemptLogin($request)) {
+            return $this->sendLoginResponse($request);
         }
 
-        
-        return back()->withErrors([
-            'email' => 'Неправильный email или пароль.',
-        ]);
+        return $this->sendFailedLoginResponse($request);
     }
 
-    public function logout()
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
     {
-        Auth::logout();
         return redirect('/');
     }
 }

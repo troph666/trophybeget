@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    // Здесь ваш код для модели Order
+    
 }
 

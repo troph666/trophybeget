@@ -16,7 +16,7 @@
             align-items: center;
             height: 100vh;
         }
-        
+
         .container {
             background: #fff;
             padding: 2rem;
@@ -26,23 +26,23 @@
             max-width: 400px;
             box-sizing: border-box;
         }
-        
+
         h1 {
             margin-bottom: 2rem;
             text-align: center;
             color: #333;
         }
-        
+
         .form-group {
             margin-bottom: 1rem;
         }
-        
+
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
             color: #555;
         }
-        
+
         .form-group input {
             width: 100%;
             padding: 0.5rem;
@@ -50,7 +50,7 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
-        
+
         .btn {
             width: 100%;
             padding: 0.75rem;
@@ -61,7 +61,7 @@
             font-size: 1rem;
             cursor: pointer;
         }
-        
+
         .btn:hover {
             background-color: #0056b3;
         }

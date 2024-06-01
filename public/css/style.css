@@ -95,8 +95,7 @@ main {
   width: 100%;
   max-width: 150px;
   height: auto;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 5px;
   margin-bottom: 15px;
 }
@@ -280,8 +279,7 @@ section {
 .izbrannoe-item-image {
   width: 100px;
   height: 100px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   margin-right: 15px;
   border-radius: 5px;
 }
@@ -304,8 +302,7 @@ section {
   width: 100%;
   max-width: 333px;
   height: auto;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 5px;
 }
 
@@ -329,4 +326,16 @@ section {
 
 .add-to-cart-button, .details-button, .remove-item-button {
   margin-top: 10px;
-}/*# sourceMappingURL=style.css.map */
+}
+
+.corner-link {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.corner-link a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}

@@ -21,15 +21,15 @@ class User extends Authenticatable
         'role',
     ];
 
-    // Ваши существующие свойства и методы
+    
 
     public function products()
     {
-        return $this->hasMany(Product::class); // Убедитесь, что у вас есть модель Product
+        return $this->hasMany(Product::class); 
     }
 
     public function orders()
     {
-        return $this->hasMany(Order::class); // Убедитесь, что у вас есть модель Order
+        return $this->hasMany(Order::class); 
     }
 }

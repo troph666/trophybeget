@@ -110,7 +110,7 @@
 
 function addProduct(event) {
     event.preventDefault();
-    // Логика добавления товара
+    
 }
 </script>
             <button type="submit" class="btn">Зарегистрироваться</button>

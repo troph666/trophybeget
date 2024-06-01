@@ -13,6 +13,12 @@ class RegisterController extends Controller
 {
     use RegistersUsers;
 
+    /**
+     * Validate the incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -23,6 +29,12 @@ class RegisterController extends Controller
         ]);
     }
 
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $data
+     * @return \App\Models\User
+     */
     protected function create(array $data)
     {
         return User::create([
@@ -33,12 +45,16 @@ class RegisterController extends Controller
         ]);
     }
 
+    /**
+     * Handle a successful registration.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function registered(Request $request, $user)
     {
-        if ($user->role == 'seller') {
-            return redirect()->route('seller.dashboard');
-        }
-
+        
         return redirect('/');
     }
 }

@@ -17,10 +17,10 @@
     <div class="user-actions">
         <a href="#" onclick="showSection('product-catalog'); hideAuth();">Каталог</a>
         <a href="#" onclick="showSection('cart'); hideAuth();">Корзина</a>
-        <a href="#" onclick="showSection('izbrannoe'); hideAuth();">Избранное</a>
     </div>
     <div class="auth-buttons">
         @auth
+        <a href="#" onclick="showSection('seller-dashboard')">Личный кабинет продавца</a>
             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Выйти</a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
@@ -38,10 +38,12 @@
                 <h2>Личный кабинет продавца</h2>
                 <nav>
                     <ul>
+                    <li><a href="#" onclick="showSection('product-catalog'); hideAuth();">Главная</a></li>
                         <li><a href="#" onclick="showSellerSection('seller-products')">Мои товары</a></li>
                         <li><a href="#" onclick="showSellerSection('seller-orders')">Заказы</a></li>
                     </ul>
                 </nav>
+                <button onclick="showSection('product-catalog')">Главная</button>
                 <div id="seller-products" class="seller-section">
                     <h3>Мои товары</h3>
                     <form class="product-form" onsubmit="addProduct(event)">
@@ -71,12 +73,37 @@
                 </div>
             </section>
         @else
-            <section id="buyer-dashboard" class="dashboard">
-                <h2>Личный кабинет покупателя</h2>
+        <section id="buyer-dashboard" class="dashboard">
+        <div class="container">
+            <h1>Личный кабинет покупателя</h1>
+            <nav>
                 <ul>
-                    <li>Мои заказы</li>
+                    <li><a href="#" onclick="showSection('orders')">Мои заказы</a></li>
+                    <li><a href="#" onclick="showSection('settings')">Настройки</a></li>
                 </ul>
-            </section>
+            </nav>
+            <div id="orders" class="section active">
+                <h2>Мои заказы</h2>
+                
+                </div>
+            </div>
+            <div id="settings" class="section">
+                <h2>Настройки</h2>
+                <form method="POST" action="#">
+                    @csrf
+                    <div class="form-group">
+                        <label for="name">Имя:</label>
+                        <input type="text" id="name" name="name" value="{{ Auth::user()->name }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" value="{{ Auth::user()->email }}">
+                    </div>
+                    <button type="submit" class="btn">Сохранить изменения</button>
+                </form>
+            </div>
+        </div>
+    </section>
         @endif
     @endauth
     
@@ -174,12 +201,6 @@
         <button onclick="checkout()">Оформить заказ</button>
     </section>
 
-    <section id="izbrannoe" class="izbrannoe hidden">
-        <h2>Избранное</h2>
-        <div id="izbrannoe-items-list" class="izbrannoe-items-list"></div>
-    </section>
-</main>
-
 <script>
 
     function showSection(sectionId) {
@@ -215,14 +236,38 @@
 
 
     function register(event) {
-        event.preventDefault();
-        const role = document.getElementById('role').value;
-        if (role === 'seller') {
-            showSection('seller-dashboard');
-        } else {
-            showSection('buyer-dashboard');
-        }
+    event.preventDefault();
+    const role = document.getElementById('role').value;
+    if (role === 'seller') {
+        showSection('seller-dashboard');
+    } else {
+        showSection('buyer-dashboard');
     }
+}
+
+
+function showSection(sectionId) {
+    const sections = document.querySelectorAll('main > section');
+    sections.forEach(section => {
+        if (section.id === sectionId) {
+            section.classList.remove('hidden');
+        } else {
+            section.classList.add('hidden');
+        }
+    });
+}
+
+function showSellerSection(sectionId) {
+    const sellerSections = document.querySelectorAll('.seller-section');
+    sellerSections.forEach(section => {
+        if (section.id === sectionId) {
+            section.classList.remove('hidden');
+        } else {
+            section.classList.add('hidden');
+        }
+    });
+}
+
 
 
     function login(event) {
