@@ -5,6 +5,9 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SellerDashboardController;
+use App\Http\Controllers\Admin\ProductController;
+
+
 
 Route::get('/', function () {
     return view('index');
@@ -44,3 +47,39 @@ Route::get('/register', function () {
 })->name('register');
 
 
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('products', [ProductController::class, 'index'])->name('products.index');
+    Route::post('products/{id}/change-status', [ProductController::class, 'changeStatus'])->name('product.changeStatus');
+});
+
+
+Route::get('catalog', [ProductController::class, 'catalog'])->name('catalog');
+Route::post('/product/add', [ProductController::class, 'addProduct'])->name('product.add');
+Route::get('/seller/dashboard', [SellerDashboardController::class, 'index'])->name('seller.products');
+
+Route::delete('/product/{id}', [ProductController::class, 'delete'])->name('product.delete');
+
+Route::post('/admin/product/{id}/changeStatus', 'Admin\ProductController@changeStatus')->name('admin.product.changeStatus');
+
+
+
+
+
+
+
+
+
+
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

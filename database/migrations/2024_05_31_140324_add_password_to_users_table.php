@@ -14,7 +14,10 @@ class AddPasswordToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('password')->after('email');
+            // Проверка на существование столбца перед добавлением
+            if (!Schema::hasColumn('users', 'password')) {
+                $table->string('password')->after('email');
+            }
         });
     }
 
@@ -30,3 +33,4 @@ class AddPasswordToUsersTable extends Migration
         });
     }
 }
+

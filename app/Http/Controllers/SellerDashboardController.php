@@ -17,9 +17,7 @@ class SellerDashboardController extends Controller
     {
         $user = Auth::user();
         $products = $user->products; 
-        $orders = $user->orders; 
 
-        return view('seller.dashboard', compact('products', 'orders'));
-
+        return view('seller.dashboard', compact('products'));
     }
 }

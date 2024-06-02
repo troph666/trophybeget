@@ -6,13 +6,26 @@ use Illuminate\Support\Facades\Schema;
 
 class AddRoleToUsersTable extends Migration
 {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('buyer'); // По умолчанию роль "покупатель"
+            // Проверка на существование столбца перед добавлением
+            if (!Schema::hasColumn('users', 'role')) {
+                $table->string('role')->default('buyer')->after('email');
+            }
         });
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
@@ -20,3 +33,4 @@ class AddRoleToUsersTable extends Migration
         });
     }
 }
+
