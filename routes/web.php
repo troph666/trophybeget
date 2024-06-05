@@ -1,20 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SellerDashboardController;
-use App\Http\Controllers\Admin\ProductController;
-
-
+use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
     return view('index');
-});
-
-Route::get('/izbrannoe', function () {
-    return view('izbrannoe');
 });
 
 Route::get('/cart', function () {
@@ -22,64 +18,62 @@ Route::get('/cart', function () {
 });
 
 Route::get('/catalog', function () {
-    return view('catalog'); 
+    return view('catalog');
 })->name('catalog');
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
+Auth::routes();
 
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{id}', [UserController::class, 'show']);
 
 Route::middleware('auth')->group(function () {
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{id}', [UserController::class, 'show']);
     Route::get('/seller/dashboard', [SellerDashboardController::class, 'index'])->name('seller.dashboard');
 });
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
-
-Route::get('/register', function () {
-    return view('register');
-})->name('register');
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('products', [ProductController::class, 'index'])->name('products.index');
-    Route::post('products/{id}/change-status', [ProductController::class, 'changeStatus'])->name('product.changeStatus');
+
+    Route::get('login', [AdminController::class, 'loginForm'])->name('login');
+
+    Route::post('login', [AdminController::class, 'login']);
+
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('products', [ProductController::class, 'index'])->name('products.index');
+        Route::post('products/{id}/change-status', [ProductController::class, 'changeStatus'])->name('product.changeStatus');
+    });
 });
 
 
-Route::get('catalog', [ProductController::class, 'catalog'])->name('catalog');
 Route::post('/product/add', [ProductController::class, 'addProduct'])->name('product.add');
-Route::get('/seller/dashboard', [SellerDashboardController::class, 'index'])->name('seller.products');
-
 Route::delete('/product/{id}', [ProductController::class, 'delete'])->name('product.delete');
+Route::post('/admin/products/{id}/changeStatus', [ProductController::class, 'changeStatus'])->name('admin.product.changeStatus');
+Route::get('/catalog', [ProductController::class, 'approvedProducts'])->name('catalog');
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/products', [ProductController::class, 'adminProductList'])->name('admin.products');
+    Route::post('/admin/products/{id}/approve', [ProductController::class, 'approveProduct'])->name('admin.product.approve');
+});
 
-Route::post('/admin/product/{id}/changeStatus', 'Admin\ProductController@changeStatus')->name('admin.product.changeStatus');
+Route::post('/admin/products/{id}/change-status', [ProductController::class, 'changeStatus'])->name('admin.products.changeStatus');
+Route::post('/admin/products/{id}/approve', [ProductController::class, 'approveProduct'])->name('admin.product.approve');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/products', [AdminController::class, 'index'])->name('admin.products');
+    Route::post('/admin/products/{id}/approve', [AdminController::class, 'approveProduct'])->name('admin.product.approve');
+});
+Route::get('/', 'App\Http\Controllers\ExampleController@index');
+Route::get('/seller/products', [SellerDashboardController::class, 'index'])->name('seller.products');
 
+Route::post('/product/add', [ProductController::class, 'addProduct'])->name('product.add');
+Route::post('/admin/products/{id}/changeStatus', [ProductController::class, 'changeStatus'])->name('admin.product.changeStatus');
+Route::patch('/change-status/{id}', 'Admin\ProductController@changeStatus')->name('admin.product.changeStatus');
+Route::post('/admin/product/{id}/approve', 'AdminController@approveProduct')->name('admin.product.approve');
+Route::post('/admin/product/{id}/approve', [AdminController::class, 'approveProduct'])->name('admin.product.approve');
 
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
-
-
-
-
-
-
-
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/cart', 'CartController@index')->name('cart.index');
+});

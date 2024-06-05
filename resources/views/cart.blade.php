@@ -15,13 +15,11 @@
         </div>
         <nav>
             <ul>
-            <li><a href="{{ route('catalog') }}">Каталог</a></li>
-
+                <li><a href="{{ route('catalog') }}">Каталог</a></li>
             </ul>
         </nav>
         <div class="user-actions">
             <a href="/cart">Корзина</a>
-            <a href="/izbrannoe">Избранное</a>
             <a href="#">Заказы</a>
         </div>
         <div class="auth-buttons">
@@ -30,56 +28,58 @@
         </div>
     </header>
 
-    <main>
-        <section id="shopping-cart" class="cart-section">
-            <h2>Корзина</h2>
-            <div class="cart-items">
+    <div class="cart-items">
+        @foreach ($cartItems as $item)
+            <div class="cart-item" data-product-id="{{ $item->product->id }}">
+                <h2>{{ $item->product->name }}</h2>
+                <p class="cart-item-price">Цена: {{ $item->product->price }} руб.</p>
+                <input type="number" value="{{ $item->quantity }}" min="1">
+                <button class="remove-item-button">Удалить</button>
+            </div>
+        @endforeach
+    </div>
 
-                <div class="cart-item">
-                    <img src="" alt="" class="cart-item-image">
-                    <div class="cart-item-details">
-                        <h3 class="cart-item-title">JBL</h3>
-                        <p class="cart-item-price">Цена: 1000 руб.</p>
-                        <label for="quantity1">Количество:</label>
-                        <input type="number" id="quantity1" name="quantity1" value="1" min="1">
-                        <button class="remove-item-button">Удалить</button>
-                    </div>
-                </div>
-                <div class="cart-item">
-                    <img src="" alt="" class="cart-item-image">
-                    <div class="cart-item-details">
-                        <h3 class="cart-item-title">Hyperx</h3>
-                        <p class="cart-item-price">Цена: 5005 руб.</p>
-                        <label for="quantity2">Количество:</label>
-                        <input type="number" id="quantity2" name="quantity2" value="1" min="1">
-                        <button class="remove-item-button">Удалить</button>
-                    </div>
-                </div>
-            </div>
-            <div class="cart-summary">
-                <p>Итого: <span id="total-price">1500 руб.</span></p>
-                <button class="checkout-button">Перейти к оформлению</button>
-            </div>
-        </section>
-    </main>
+    <div id="total-price">Общая сумма: {{ $totalPrice }} руб.</div>
 
     <script>
-        
         document.addEventListener('DOMContentLoaded', () => {
-            
             const removeButtons = document.querySelectorAll('.remove-item-button');
             removeButtons.forEach(button => {
                 button.addEventListener('click', event => {
                     const item = event.target.closest('.cart-item');
-                    item.remove();
-                    updateTotalPrice();
+                    const productId = item.dataset.productId; 
+                    fetch(`/cart/remove/${productId}`, { method: 'DELETE' })
+                        .then(response => {
+                            if (response.ok) {
+                                item.remove();
+                                updateTotalPrice();
+                            }
+                        })
+                        .catch(error => console.error('Error removing item:', error));
                 });
             });
 
-            
             const quantityInputs = document.querySelectorAll('input[type="number"]');
             quantityInputs.forEach(input => {
-                input.addEventListener('change', updateTotalPrice);
+                input.addEventListener('change', event => {
+                    const item = event.target.closest('.cart-item');
+                    const productId = item.dataset.productId;
+                    const quantity = event.target.value;
+                    fetch(`/cart/update/${productId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        },
+                        body: JSON.stringify({ quantity })
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                updateTotalPrice();
+                            }
+                        })
+                        .catch(error => console.error('Error updating quantity:', error));
+                });
             });
 
             function updateTotalPrice() {
@@ -90,7 +90,7 @@
                     const quantity = parseInt(item.querySelector('input[type="number"]').value);
                     total += price * quantity;
                 });
-                document.getElementById('total-price').innerText = total + ' руб.';
+                document.getElementById('total-price').innerText = 'Общая сумма: ' + total + ' руб.';
             }
         });
     </script>

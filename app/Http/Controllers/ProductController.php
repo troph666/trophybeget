@@ -22,8 +22,8 @@ class ProductController extends Controller
         $product->description = $validatedData['product-description'];
         $product->price = $validatedData['product-price'];
         $product->category = $validatedData['product-category'];
-        $product->status = 'pending'; // Установим статус "на рассмотрении"
-        $product->seller_id = Auth::id(); // Устанавливаем ID продавца
+        $product->status = 'pending'; 
+        $product->seller_id = Auth::id();
 
         $product->save();
 

@@ -119,88 +119,35 @@
     @endauth
     
     <section id="product-catalog" class="catalog">
-        <h2>Каталог товаров</h2>
-        <form class="filter-form" onsubmit="filterProducts(event)">
-            <label for="category-filter">Категория:</label>
-            <select id="category-filter" name="category-filter">
-                <option value="all">Все</option>
-                <option value="category1">Категория 1</option>
-                <option value="category2">Категория 2</option>
-                <option value="category3">Категория 3</option>
-                <option value="category4">Категория 4</option>
-                <option value="category5">Категория 5</option>
-            </select>
-            <button type="submit">Фильтровать</button>
-        </form>
+    <h2>Каталог товаров</h2>
+    <form class="filter-form" onsubmit="filterProducts(event)">
+        <label for="category-filter">Категория:</label>
+        <select id="category-filter" name="category-filter">
+            <option value="all">Все</option>
+            <option value="category1">Категория 1</option>
+            <option value="category2">Категория 2</option>
+            <option value="category3">Категория 3</option>
+            <option value="category4">Категория 4</option>
+            <option value="category5">Категория 5</option>
+        </select>
+        <button type="submit">Фильтровать</button>
+    </form>
     <div id="product-list" class="product-list">
-    <div class="product-item" data-id="1" data-category="category1">
-                <img src="img/6997180321.webp" alt="Лакомство PERFECT FIT IMMUNITY" class="product-image">
-                <h3 class="product-title">Лакомство PERFECT FIT IMMUNITY для собак, с говядиной и экстрактом бархатцев, 12 шт x 90 г</h3>
-                <p class="product-seller">Продавец:</p>
-                <p class="product-category">Категория: </p>
-                <p class="product-price">Цена: 942 ₽.</p>
-                <button class="add-to-cart-button" onclick="addToCart(1, 'Лакомство PERFECT FIT IMMUNITY', 942)">Добавить в корзину</button>
-                <button class="order-button" onclick="orderProduct(1, 'Лакомство PERFECT FIT IMMUNITY', 942)">Оформить заказ</button>
-                <button class="details-button" onclick="showProductDetails(1)">Подробнее</button>
-            </div>
-            <div class="product-item" data-id="2" data-category="category2">
-                <img src="img/6921651828.webp" alt="Philips Парогенератор GC6740/30" class="product-image">
-                <h3 class="product-title">Philips Парогенератор GC6740/30, фиолетовый</h3>
-                <p class="product-seller">Продавец: </p>
-                <p class="product-category">Категория: </p>
-                <p class="product-price">Цена: 12 242 ₽.</p>
-                <button class="add-to-cart-button" onclick="addToCart(2, 'Philips Парогенератор GC6740/30', 12242)">Добавить в корзину</button>
-                <button class="order-button" onclick="orderProduct(1, 'Лакомство PERFECT FIT IMMUNITY', 942)">Оформить заказ</button>
-                <button class="details-button" onclick="showProductDetails(2)">Подробнее</button>
-            </div>
-            <div class="product-item" data-id="3" data-category="category3">
-                <img src="img/product3.webp" alt="Iphone 15" class="product-image">
-                <h3 class="product-title">Iphone 15</h3>
-                <p class="product-seller">Продавец: </p>
-                <p class="product-category">Категория: </p>
-                <p class="product-price">Цена: 1500 ₽.</p>
-                <button class="add-to-cart-button" onclick="addToCart(3, 'Iphone 15', 1500)">Добавить в корзину</button>
-                <button class="order-button" onclick="orderProduct(1, 'Лакомство PERFECT FIT IMMUNITY', 942)">Оформить заказ</button>
-                <button class="details-button" onclick="showProductDetails(3)">Подробнее</button>
-            </div>
-            <div class="product-item" data-id="4" data-category="category4">
-                <img src="img/product4.webp" alt="Процессор i5-13400f" class="product-image">
-                <h3 class="product-title">Процессор i5-13400f</h3>
-                <p class="product-seller">Продавец: </p>
-                <p class="product-category">Категория: </p>
-                <p class="product-price">Цена: 20 000 ₽.</p>
-                <button class="add-to-cart-button" onclick="addToCart(4, 'Процессор i5-13400f', 20000)">Добавить в корзину</button>
-                <button class="order-button" onclick="orderProduct(1, 'Лакомство PERFECT FIT IMMUNITY', 942)">Оформить заказ</button>
-                <button class="details-button" onclick="showProductDetails(4)">Подробнее</button>
-            </div>
-            <div class="product-item" data-id="5" data-category="category5">
-                <img src="img/product5.webp" alt="Настольная игра 'Монополия'" class="product-image">
-                <h3 class="product-title">Настольная игра "Монополия"</h3>
-                <p class="product-seller">Продавец: </p>
-                <p class="product-category">Категория: </p>
-                <p class="product-price">Цена: 3500 ₽.</p>
-                <button class="add-to-cart-button" onclick="addToCart(5, 'Настольная игра "Монополия"', 3500)">Добавить в корзину</button>
-                <button class="order-button" onclick="orderProduct(1, 'Лакомство PERFECT FIT IMMUNITY', 942)">Оформить заказ</button>
-                <button class="details-button" onclick="showProductDetails(5)">Подробнее</button>
-            </div>
-            <div class="product-item" data-id="3" data-category="category3">
-                <img src="img/product6.webp" alt="Шкаф-купе" class="product-image">
-                <h3 class="product-title">Шкаф-купе</h3>
-                <p class="product-seller">Продавец:</p>
-                <p class="product-category">Категория: </p>
-                <p class="product-price">Цена: 16 000 ₽.</p>
-                <button class="add-to-cart-button" onclick="addToCart(6, 'Шкаф-купе', 16000)">Добавить в корзину</button>
-                <button class="order-button" onclick="orderProduct(1, 'Лакомство PERFECT FIT IMMUNITY', 942)">Оформить заказ</button>
-                <button class="details-button" onclick="showProductDetails(6)">Подробнее</button>
-            </div>
-        </div>
-    </section>
+    @foreach($products as $product)
+    <div class="product-item" data-category="{{ $product->category }}">
+        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-image">
+        <h3 class="product-title">{{ $product->name }}</h3>
+        @if(isset($product->seller))
+            <p class="product-seller">Продавец: {{ $product->seller->name }}</p>
+        @endif
+        <p class="product-category">Категория: {{ $product->category }}</p>
+        <p class="product-price">Цена: {{ $product->price }} ₽</p>
+        <button class="add-to-cart-button" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->price }})">Добавить в корзину</button>
+        <button class="order-button" onclick="orderProduct({{ $product->id }}, '{{ $product->name }}', {{ $product->price }})">Оформить заказ</button>
+        <button class="details-button" onclick="showProductDetails({{ $product->id }})">Подробнее</button>
+    </div>
+@endforeach
 
-    <section id="product-details" class="product-details hidden">
-        <h2>Подробная информация о товаре</h2>
-        <div id="product-info" class="product-info"></div>
-        <button class="back-button" onclick="showSection('product-catalog')">Назад к каталогу</button>
-    </section>
     </div>
 </section>
 
@@ -323,26 +270,26 @@ function showSellerSection(sectionId) {
 
 
     function addToCart(productId, productName, productPrice) {
-        const cartItems = document.getElementById('cart-items');
-        const cartItem = document.createElement('div');
-        cartItem.classList.add('cart-item');
-        cartItem.dataset.id = productId;
-        cartItem.innerHTML = `
-            <h3>${productName}</h3>
-            <p>Цена: ${productPrice} ₽</p>
-            <button class="remove-item-button" onclick="removeFromCart(${productId})">Удалить</button>
-        `;
-        cartItems.appendChild(cartItem);
-    }
+    const cartItems = document.getElementById('cart-items');
+    const cartItem = document.createElement('div');
+    cartItem.classList.add('cart-item');
+    cartItem.dataset.id = productId;
+    cartItem.innerHTML = `
+        <h3>${productName}</h3>
+        <p>Цена: ${productPrice} ₽</p>
+        <button class="remove-item-button" onclick="removeFromCart(${productId})">Удалить</button>
+    `;
+    cartItems.appendChild(cartItem);
+}
 
 
-    function removeFromCart(productId) {
-        const cartItems = document.getElementById('cart-items');
-        const cartItem = cartItems.querySelector(`.cart-item[data-id="${productId}"]`);
-        if (cartItem) {
-            cartItems.removeChild(cartItem);
-        }
+function removeFromCart(productId) {
+    const cartItems = document.getElementById('cart-items');
+    const cartItem = cartItems.querySelector(`.cart-item[data-id="${productId}"]`);
+    if (cartItem) {
+        cartItems.removeChild(cartItem);
     }
+}
 
 
     function clearCart() {

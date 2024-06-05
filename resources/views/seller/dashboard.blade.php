@@ -1,5 +1,4 @@
 
-
 <div id="seller-products" class="seller-section" style="margin-top: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
     <h3>Добавить товар</h3>
     <form action="{{ route('product.add') }}" method="POST" class="add-product-form" style="border: 1px solid #ccc; border-radius: 5px; padding: 20px; margin-bottom: 20px; background-color: #f9f9f9;">
