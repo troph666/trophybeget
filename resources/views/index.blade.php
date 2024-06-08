@@ -16,11 +16,14 @@
     </div>
     <div class="user-actions">
         <a href="#" onclick="showSection('product-catalog'); hideAuth();">Каталог</a>
-        <a href="#" onclick="showSection('cart'); hideAuth();">Корзина</a>
     </div>
     <div class="auth-buttons">
         @auth
-            <a href="#" onclick="showSection('seller-dashboard')">Личный кабинет продавца</a>
+            @if(Auth::user()->role == 'seller')
+                <a href="#" onclick="showSection('seller-dashboard')">Личный кабинет продавца</a>
+            @else
+                <a href="#" onclick="showSection('buyer-dashboard')">Личный кабинет покупателя</a>
+            @endif
             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Выйти</a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
@@ -31,6 +34,7 @@
         @endauth
     </div>
 </header>
+
 <main>
     @auth
         @if(Auth::user()->role == 'seller')
@@ -95,13 +99,10 @@
                     <h1 style="color: #333;">Личный кабинет покупателя</h1>
                     <nav>
                         <ul style="list-style: none; padding: 0; display: flex; gap: 10px;">
-                            <li style="margin: 0;"><a href="#" onclick="showSection('orders')" style="text-decoration: none; padding: 10px 20px; background-color: #007bff; color: #fff; border-radius: 5px; transition: background-color 0.3s;">Мои заказы</a></li>
-                            <li style="margin: 0;"><a href="#" onclick="showSection('settings')" style="text-decoration: none; padding: 10px 20px; background-color: #007bff; color: #fff; border-radius: 5px; transition: background-color 0.3s;">Настройки</a></li>
+                        <a href="/my-orders" style="text-decoration: none; padding: 10px 20px; background-color: #007bff; color: #fff; border-radius: 5px; transition: background-color 0.3s; display: inline-block;">Мои заказы</a>
                         </ul>
                     </nav>
-                    <div id="orders" class="section active" style="display: block; margin-top: 20px;">
-                        <h2 style="color: #333;">Мои заказы</h2>
-                    </div>
+                   
                     <div id="settings" class="section" style="display: none; margin-top: 20px;">
                         <h2 style="color: #333;">Настройки</h2>
                         <form method="POST" action="#">
@@ -236,25 +237,23 @@
 <div id="product-list" class="product-list">
     @foreach($products as $product)
     <div class="product-card" data-category="{{ $product->category }}">
-        <h3 class="product-title">{{ $product->name }}</h3>
-        <p class="product-description">{{ $product->description }}</p>
-        <p class="product-price">Цена: {{ $product->price }}</p>
-        <p class="product-category">Категория: {{ $product->category }}</p>
-        <p class="product-seller">Продавец: {{ $product->seller_name }}</p>
-        <button class="add-to-cart-button" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->price }})">Добавить в корзину</button>
-        <button class="checkout-button" onclick="checkout()">Оформить заказ</button>
-    </div>
+    <h3 class="product-title">{{ $product->name }}</h3>
+    <p class="product-description">{{ $product->description }}</p>
+    <p class="product-price">Цена: {{ $product->price }}</p>
+    <p class="product-category">Категория: {{ $product->category }}</p>
+    <p class="product-seller">Продавец: {{ $product->seller_name }}</p>
+    <form id="order-form" action="{{ route('order.create') }}" method="POST">
+    <form action="{{ route('order.create') }}" method="POST">
+    @csrf
+    <input type="hidden" name="product_id" value="{{ $product->id }}">
+    <input type="hidden" name="product_name" value="{{ $product->name }}">
+    <input type="hidden" name="product_price" value="{{ $product->price }}">
+    <button type="submit">Оформить заказ</button>
+</form>
+
+</div>
     @endforeach
 </div>
-
-<section id="cart" class="cart hidden">
-        <h2>Корзина</h2>
-        <div id="cart-items" class="cart-items"></div>
-        <button onclick="clearCart()">Очистить корзину</button>
-        <button onclick="checkout()">Оформить заказ</button>
-    </section>
-
-
 
 <script>
 
@@ -268,24 +267,8 @@ function showSection(sectionId) {
             }
         });
     }
-    
-    function addToCart(productId, productName, productPrice) {
-        const cartItems = document.getElementById('cart-items');
-        const cartItem = document.createElement('div');
-        cartItem.classList.add('cart-item');
-        cartItem.dataset.id = productId;
-        cartItem.innerHTML = `
-            <h3>${productName}</h3>
-            <p>Цена: ${productPrice} ₽</p>
-            <button class="remove-item-button" onclick="removeFromCart(${productId})">Удалить</button>
-        `;
-        cartItems.appendChild(cartItem);
-    }
 
 
-    function checkout() {
-        alert('Оформление заказа');
-    }
 
 function hideAuth() {
         const authSections = document.querySelectorAll('.auth-section');
@@ -349,7 +332,6 @@ function showSection(sectionId) {
         }
     });
 }
-
     function login(event) {
         event.preventDefault();
         showSection('buyer-dashboard');

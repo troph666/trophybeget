@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+    
     public function addProduct(Request $request)
 {
     if (!Auth::check()) {
@@ -51,6 +52,12 @@ class ProductController extends Controller
     $product->delete();
 
     return redirect()->route('seller.products')->with('success', 'Товар подтвержден и удален.');
+}
+
+public function index()
+{
+    $products = Product::all();
+    return view('index', ['products' => $products]);
 }
 
 

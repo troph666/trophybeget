@@ -7,13 +7,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SellerDashboardController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/', function () {
     return view('index');
-});
-
-Route::get('/cart', function () {
-    return view('cart');
 });
 
 Route::get('/catalog', function () {
@@ -70,5 +67,13 @@ Route::patch('/change-status/{id}', 'Admin\ProductController@changeStatus')->nam
 Route::post('/admin/product/{id}/approve', 'AdminController@approveProduct')->name('admin.product.approve');
 Route::post('/admin/product/{id}/approve', [AdminController::class, 'approveProduct'])->name('admin.product.approve');
 
-Route::post('/user/block/{id}', 'UserController@blockUser');
+Route::get('/admin/users', 'AdminController@showUsers')->name('admin.users');
+Route::post('/order/create', [OrderController::class, 'store'])->name('order.create');
+Route::get('/catalog', [ProductController::class, 'index'])->name('product.catalog');
+Route::get('/my-orders', function () {
+    return view('my_orders');
+})->name('my.orders');
+Route::get('/my-orders', [OrderController::class, 'myOrders'])->name('my.orders');
+
+
 

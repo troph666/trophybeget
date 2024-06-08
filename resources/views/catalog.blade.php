@@ -17,7 +17,7 @@
             <div class="product-item" data-category="{{ $product->category }}">
                 <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-image">
                 <h3 class="product-title">{{ $product->name }}</h3>
-                <p class="product-seller">Продавец: {{ $product->seller->name }}</p>
+                <p class="product-seller">Продавец: {{ $product->seller_name }}</p>
                 <p class="product-category">Категория: {{ $product->category }}</p>
                 <p class="product-price">Цена: {{ $product->price }} ₽</p>
                 <button class="add-to-cart-button" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->price }})">Добавить в корзину</button>

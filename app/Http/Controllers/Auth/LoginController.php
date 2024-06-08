@@ -23,10 +23,11 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        // Удалите эту строку, так как middleware не требуется в контроллере
-    }
+    protected function authenticated(Request $request, $user)
+{
+    return redirect('/');
+}
+
 
     /**
      * Get the post login redirect path.
@@ -75,8 +76,11 @@ class LoginController extends Controller
      * @param  mixed  $user
      * @return mixed
      */
-    protected function authenticated(Request $request, $user)
-    {
-        return redirect('/');
-    }
+    protected function customAuthenticated(Request $request, $user)
+{
+    return redirect('/');
+}
+
+
+    
 }
