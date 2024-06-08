@@ -12,6 +12,11 @@ class AdminController extends Controller
         $products = Product::all();
         return view('admin.product_list', compact('products'));
     }
+    public function showUsers()
+    {
+        $users = User::all();
+        return view('admin.users', compact('users'));
+    }
 
     public function approveProduct($id)
 {

@@ -7,7 +7,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SellerDashboardController;
-use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
     return view('index');
@@ -71,9 +70,5 @@ Route::patch('/change-status/{id}', 'Admin\ProductController@changeStatus')->nam
 Route::post('/admin/product/{id}/approve', 'AdminController@approveProduct')->name('admin.product.approve');
 Route::post('/admin/product/{id}/approve', [AdminController::class, 'approveProduct'])->name('admin.product.approve');
 
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-Route::get('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::post('/user/block/{id}', 'UserController@blockUser');
 
-Route::group(['middleware' => ['web']], function () {
-    Route::get('/cart', 'CartController@index')->name('cart.index');
-});

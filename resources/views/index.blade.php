@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Маркет-плейс</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
 </head>
 <body>
 <header>
@@ -20,7 +20,7 @@
     </div>
     <div class="auth-buttons">
         @auth
-        <a href="#" onclick="showSection('seller-dashboard')">Личный кабинет продавца</a>
+            <a href="#" onclick="showSection('seller-dashboard')">Личный кабинет продавца</a>
             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Выйти</a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
@@ -38,44 +38,39 @@
                 <h2>Личный кабинет продавца</h2>
                 <nav>
                     <ul>
-                    <li><a href="#" onclick="showSection('product-catalog'); hideAuth();">Главная</a></li>
+                        <li><a href="#" onclick="showSection('product-catalog'); hideAuth();">Главная</a></li>
                         <li><a href="#" onclick="showSellerSection('seller-products')">Мои товары</a></li>
                         <li><a href="#" onclick="showSellerSection('seller-orders')">Заказы</a></li>
                     </ul>
                 </nav>
-                <button onclick="showSection('product-catalog')">Главная</button>
                 <div id="seller-products" class="seller-section">
                     <h3>Мои товары</h3>
-                    <form action="{{ route('product.add') }}" method="POST">
-                    <form action="{{ route('product.add') }}" method="POST">
-                    <div id="seller-products" class="seller-section" style="margin-top: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
-    <h3>Добавить товар</h3>
-    <form action="{{ route('product.add') }}" method="POST" class="add-product-form" style="border: 1px solid #ccc; border-radius: 5px; padding: 20px; margin-bottom: 20px; background-color: #f9f9f9;">
-        @csrf
-        <div class="form-group" style="margin-bottom: 15px;">
-            <label for="product-name" style="display: block; margin-bottom: 5px;">Название товара:</label>
-            <input type="text" id="product-name" name="product-name" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-        </div>
-        <div class="form-group" style="margin-bottom: 15px;">
-            <label for="product-description" style="display: block; margin-bottom: 5px;">Описание товара:</label>
-            <textarea id="product-description" name="product-description" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;"></textarea>
-        </div>
-        <div class="form-group" style="margin-bottom: 15px;">
-            <label for="product-price" style="display: block; margin-bottom: 5px;">Цена:</label>
-            <input type="number" id="product-price" name="product-price" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-        </div>
-        <div class="form-group" style="margin-bottom: 15px;">
-            <label for="product-category" style="display: block; margin-bottom: 5px;">Категория:</label>
-            <select id="product-category" name="product-category" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-                <option value="category1">Категория 1</option>
-                <option value="category2">Категория 2</option>
-                <option value="category3">Категория 3</option>
-                <option value="category4">Категория 4</option>
-                <option value="category5">Категория 5</option>
-            </select>
-        </div>
-        <button type="submit" class="btn-submit" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer;">Добавить товар</button>
-    </form>
+                    <form action="{{ route('product.add') }}" method="POST" class="add-product-form" style="border: 1px solid #ccc; border-radius: 5px; padding: 20px; margin-bottom: 20px; background-color: #f9f9f9;">
+                        @csrf
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="product-name" style="display: block; margin-bottom: 5px;">Название товара:</label>
+                            <input type="text" id="product-name" name="product-name" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="product-description" style="display: block; margin-bottom: 5px;">Описание товара:</label>
+                            <textarea id="product-description" name="product-description" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;"></textarea>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="product-price" style="display: block; margin-bottom: 5px;">Цена:</label>
+                            <input type="number" id="product-price" name="product-price" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="product-category" style="display: block; margin-bottom: 5px;">Категория:</label>
+                            <select id="product-category" name="product-category" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                                <option value="category1">Категория 1</option>
+                                <option value="category2">Категория 2</option>
+                                <option value="category3">Категория 3</option>
+                                <option value="category4">Категория 4</option>
+                                <option value="category5">Категория 5</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-submit" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer;">Добавить товар</button>
+                    </form>
                     <div id="seller-product-list" class="product-list"></div>
                 </div>
                 <div id="seller-orders" class="seller-section hidden">
@@ -83,38 +78,47 @@
                     <div id="seller-order-list" class="order-list"></div>
                 </div>
             </section>
-        @else
-        <section id="buyer-dashboard" class="dashboard">
-        <div class="container">
-            <h1>Личный кабинет покупателя</h1>
-            <nav>
-                <ul>
-                    <li><a href="#" onclick="showSection('orders')">Мои заказы</a></li>
-                    <li><a href="#" onclick="showSection('settings')">Настройки</a></li>
-                </ul>
-            </nav>
-            <div id="orders" class="section active">
-                <h2>Мои заказы</h2>
-                
-                </div>
-            </div>
-            <div id="settings" class="section">
-                <h2>Настройки</h2>
-                <form method="POST" action="#">
-                    @csrf
-                    <div class="form-group">
-                        <label for="name">Имя:</label>
-                        <input type="text" id="name" name="name" value="{{ Auth::user()->name }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" value="{{ Auth::user()->email }}">
-                    </div>
-                    <button type="submit" class="btn">Сохранить изменения</button>
-                </form>
-            </div>
+        @elseif(Auth::user()->isAdmin())
+        <section id="admin-dashboard" class="dashboard" style="margin: 20px;">
+    <div class="container" style="max-width: 1200px; margin: auto; padding: 20px; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <h1 style="color: #333;">Личный кабинет админа</h1>
+        <div id="users" class="section" style=" margin-top: 20px;">
+            <h2 style="color: #333;">Пользователи</h2>
+            <button class="btn" onclick="confirmUser()" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; margin-right: 10px;">Подтвердить товар</button>
+            <button class="btn" onclick="blockUser()" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">Блокировка пользователя</button>
         </div>
-    </section>
+    </div>
+</section>
+        @else
+            <section id="buyer-dashboard" class="dashboard" style="margin: 20px;">
+                <div class="container" style="max-width: 1200px; margin: auto; padding: 20px; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <h1 style="color: #333;">Личный кабинет покупателя</h1>
+                    <nav>
+                        <ul style="list-style: none; padding: 0; display: flex; gap: 10px;">
+                            <li style="margin: 0;"><a href="#" onclick="showSection('orders')" style="text-decoration: none; padding: 10px 20px; background-color: #007bff; color: #fff; border-radius: 5px; transition: background-color 0.3s;">Мои заказы</a></li>
+                            <li style="margin: 0;"><a href="#" onclick="showSection('settings')" style="text-decoration: none; padding: 10px 20px; background-color: #007bff; color: #fff; border-radius: 5px; transition: background-color 0.3s;">Настройки</a></li>
+                        </ul>
+                    </nav>
+                    <div id="orders" class="section active" style="display: block; margin-top: 20px;">
+                        <h2 style="color: #333;">Мои заказы</h2>
+                    </div>
+                    <div id="settings" class="section" style="display: none; margin-top: 20px;">
+                        <h2 style="color: #333;">Настройки</h2>
+                        <form method="POST" action="#">
+                            @csrf
+                            <div class="form-group" style="margin-bottom: 15px;">
+                                <label for="name" style="display: block; margin-bottom: 5px; color: #555;">Имя:</label>
+                                <input type="text" id="name" name="name" value="{{ Auth::user()->name }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 15px;">
+                                <label for="email" style="display: block; margin-bottom: 5px; color: #555;">Email:</label>
+                                <input type="email" id="email" name="email" value="{{ Auth::user()->email }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                            </div>
+                            <button type="submit" class="btn" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">Сохранить изменения</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
         @endif
     @endauth
     
@@ -132,36 +136,129 @@
         </select>
         <button type="submit">Фильтровать</button>
     </form>
-    <div id="product-list" class="product-list">
+    <style>
+    .product-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .product-card {
+        background-color: #ffffff;
+        border: 1px solid #dddddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: calc(33% - 20px);
+    }
+
+    .product-card img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .product-title {
+        font-size: 18px;
+        margin: 10px 0;
+    }
+
+    .product-description {
+        font-size: 16px;
+        color: #555555;
+        margin-bottom: 10px;
+    }
+
+    .product-price {
+        font-size: 16px;
+        color: #d9534f;
+        margin: 10px 0;
+    }
+
+    .product-category {
+        font-size: 16px;
+        color: #007bff;
+        margin: 10px 0;
+    }
+
+    .product-seller {
+        font-size: 16px;
+        color: #555555;
+        margin: 10px 0;
+    }
+
+    .add-to-cart-button,
+    .details-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s;
+    }
+
+    .add-to-cart-button:hover,
+    .details-button:hover {
+        background-color: #0056b3;
+    }
+
+    .cart {
+        display: none;
+    }
+
+    .cart-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .clear-cart-button,
+    .checkout-button {
+        padding: 10px 20px;
+        background-color: #d9534f;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s;
+    }
+
+    .clear-cart-button:hover,
+    .checkout-button:hover {
+        background-color: #c9302c;
+    }
+</style>
+
+<div id="product-list" class="product-list">
     @foreach($products as $product)
-    <div class="product-item" data-category="{{ $product->category }}">
-        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-image">
+    <div class="product-card" data-category="{{ $product->category }}">
         <h3 class="product-title">{{ $product->name }}</h3>
-        @if(isset($product->seller))
-            <p class="product-seller">Продавец: {{ $product->seller->name }}</p>
-        @endif
+        <p class="product-description">{{ $product->description }}</p>
+        <p class="product-price">Цена: {{ $product->price }}</p>
         <p class="product-category">Категория: {{ $product->category }}</p>
-        <p class="product-price">Цена: {{ $product->price }} ₽</p>
+        <p class="product-seller">Продавец: {{ $product->seller_name }}</p>
         <button class="add-to-cart-button" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->price }})">Добавить в корзину</button>
-        <button class="order-button" onclick="orderProduct({{ $product->id }}, '{{ $product->name }}', {{ $product->price }})">Оформить заказ</button>
-        <button class="details-button" onclick="showProductDetails({{ $product->id }})">Подробнее</button>
+        <button class="checkout-button" onclick="checkout()">Оформить заказ</button>
     </div>
-@endforeach
+    @endforeach
+</div>
 
-    </div>
-</section>
-
-
-    <section id="cart" class="cart hidden">
+<section id="cart" class="cart hidden">
         <h2>Корзина</h2>
         <div id="cart-items" class="cart-items"></div>
         <button onclick="clearCart()">Очистить корзину</button>
         <button onclick="checkout()">Оформить заказ</button>
     </section>
 
+
+
 <script>
 
-    function showSection(sectionId) {
+function showSection(sectionId) {
         const sections = document.querySelectorAll('main > section');
         sections.forEach(section => {
             if (section.id === sectionId) {
@@ -172,9 +269,25 @@
         });
     }
     
+    function addToCart(productId, productName, productPrice) {
+        const cartItems = document.getElementById('cart-items');
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.dataset.id = productId;
+        cartItem.innerHTML = `
+            <h3>${productName}</h3>
+            <p>Цена: ${productPrice} ₽</p>
+            <button class="remove-item-button" onclick="removeFromCart(${productId})">Удалить</button>
+        `;
+        cartItems.appendChild(cartItem);
+    }
 
 
-    function hideAuth() {
+    function checkout() {
+        alert('Оформление заказа');
+    }
+
+function hideAuth() {
         const authSections = document.querySelectorAll('.auth-section');
         authSections.forEach(section => {
             section.classList.add('hidden');
@@ -192,6 +305,27 @@
             }
         });
     }
+
+
+    function confirmUser() {
+            window.location.href = "http://127.0.0.1:8000/admin/products";
+        }
+
+        function blockUser(userId) {
+    fetch(`/user/block/${userId}`, { method: 'POST' })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Ошибка блокировки пользователя');
+            }
+        })
+        .then(data => {
+            alert('Пользователь успешно заблокирован');
+        })
+        .catch(error => console.error('Ошибка блокировки пользователя:', error));
+}
+
 
 
     function register(event) {
@@ -216,122 +350,18 @@ function showSection(sectionId) {
     });
 }
 
-function showSellerSection(sectionId) {
-    const sellerSections = document.querySelectorAll('.seller-section');
-    sellerSections.forEach(section => {
-        if (section.id === sectionId) {
-            section.classList.remove('hidden');
-        } else {
-            section.classList.add('hidden');
-        }
-    });
-}
-
-
-
     function login(event) {
         event.preventDefault();
         showSection('buyer-dashboard');
     }
 
-
-    function addProduct(event) {
-        event.preventDefault();
-        const productName = document.getElementById('product-name').value;
-        const productDescription = document.getElementById('product-description').value;
-        const productPrice = document.getElementById('product-price').value;
-        const productImage = document.getElementById('product-image').files[0];
-        const productCategory = document.getElementById('product-category').value;
-
-        const productList = document.getElementById('seller-product-list');
-        const productItem = document.createElement('div');
-        productItem.classList.add('product-item');
-        productItem.innerHTML = `
-            <h3>${productName}</h3>
-            <p>${productDescription}</p>
-            <p>Цена: ${productPrice} ₽</p>
-            <button onclick="deleteProduct(this)">Удалить</button>
-        `;
-        productList.appendChild(productItem);
-    }
-
-    function orderProduct(productId, productName, productPrice) {
-    const confirmation = confirm(`Вы уверены, что хотите оформить заказ на товар "${productName}" за ${productPrice}₽?`);
-    if (confirmation) {
-        addToCart(productId, productName, productPrice);
-        alert('Товар добавлен в корзину. Можете оформить заказ в корзине.');
-    }
-}
-
-
-    function deleteProduct(button) {
-        button.parentElement.remove();
-    }
-
-
-    function addToCart(productId, productName, productPrice) {
-    const cartItems = document.getElementById('cart-items');
-    const cartItem = document.createElement('div');
-    cartItem.classList.add('cart-item');
-    cartItem.dataset.id = productId;
-    cartItem.innerHTML = `
-        <h3>${productName}</h3>
-        <p>Цена: ${productPrice} ₽</p>
-        <button class="remove-item-button" onclick="removeFromCart(${productId})">Удалить</button>
-    `;
-    cartItems.appendChild(cartItem);
-}
-
-
-function removeFromCart(productId) {
-    const cartItems = document.getElementById('cart-items');
-    const cartItem = cartItems.querySelector(`.cart-item[data-id="${productId}"]`);
-    if (cartItem) {
-        cartItems.removeChild(cartItem);
-    }
-}
-
-
-    function clearCart() {
-        const cartItems = document.getElementById('cart-items');
-        cartItems.innerHTML = '';
-    }
-
-
-    function checkout() {
-        alert('Оформление заказа');
-        clearCart();
-    }
-
-
-    function showProductDetails(productId) {
-        const productCatalog = [
-            { id: 1, name: 'Лакомство PERFECT FIT IMMUNITY', description: 'Лакомство для собак, с говядиной и экстрактом бархатцев.', price: 942, image: 'img/6997180321.webp' },
-            { id: 2, name: 'Philips Парогенератор GC6740/30', description: 'Парогенератор Philips, фиолетовый.', price: 12242, image: 'img/6921651828.webp' },
-            { id: 3, name: 'Iphone 15', description: 'Описание телефона Iphone 15', price: 1500, image: 'img/product3.webp' },
-            { id: 4, name: 'Процессор i5-13400f', description: 'Процессор Intel i5-13400f', price: 20000, image: 'img/product4.webp' },
-            { id: 5, name: 'Настольная игра "Монополия"', description: 'Популярная настольная игра "Монополия".', price: 3500, image: 'img/product5.webp' },
-            { id: 6, name: 'Шкаф-купе', description: 'Большой шкаф-купе', price: 16000, image: 'img/product6.webp' }
-        ];
-
-        const product = productCatalog.find(p => p.id === productId);
-        if (product) {
-            document.getElementById('product-info').innerHTML = `
-                <img src="${product.image}" alt="${product.name}" class="product-image">
-                <h3 class="product-title">${product.name}</h3>
-                <p class="product-description">${product.description}</p>
-                <p class="product-price">Цена: ${product.price} ₽</p>
-                <button class="add-to-cart-button" onclick="addToCart(${product.id}, '${product.name}', ${product.price})">Добавить в корзину</button>`;
-            showSection('product-details');
-        }
-    }
     function filterProducts(event) {
     event.preventDefault();
     const categoryFilter = document.getElementById('category-filter').value;
-    const productItems = document.querySelectorAll('.product-item');
+    const productItems = document.querySelectorAll('.product-card');
 
     productItems.forEach(item => {
-        const category = item.dataset.category;
+        const category = item.querySelector('.product-category').textContent.split(': ')[1]; 
         if (categoryFilter === 'all' || category === categoryFilter) {
             item.style.display = 'block';
         } else {
@@ -339,17 +369,7 @@ function removeFromCart(productId) {
         }
     });
 }
-function login(event) {
-    event.preventDefault();
-}
 
-function register(event) {
-    event.preventDefault();
-}
-    function checkout() {
-        alert('Ваш заказ оформлен!');
-        clearCart();
-    }   
 </script>
 </body>
 </html>

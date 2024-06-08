@@ -10,34 +10,37 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     public function addProduct(Request $request)
-    {
-        if (!Auth::check()) {
-            return redirect()->back()->with('error', 'Необходимо войти в систему, чтобы добавить продукт.');
-        }
-
-        $validatedData = $request->validate([
-            'product-name' => 'required|string|max:255',
-            'product-description' => 'required|string',
-            'product-price' => 'required|numeric',
-            'product-category' => 'required|string',
-        ]);
-
-        $product = new Product();
-        $product->name = $validatedData['product-name'];
-        $product->description = $validatedData['product-description'];
-        $product->price = $validatedData['product-price'];
-        $product->category = $validatedData['product-category'];
-        $product->status = 'pending'; 
-
-        if (Auth::check()) {
-            $product->seller_id = Auth::id(); 
-            $product->user_id = Auth::id(); 
-        }
-
-        $product->save();
-
-        return redirect()->route('seller.products')->with('success', 'Товар успешно добавлен.');
+{
+    if (!Auth::check()) {
+        return redirect()->back()->with('error', 'Необходимо войти в систему, чтобы добавить продукт.');
     }
+
+    $validatedData = $request->validate([
+        'product-name' => 'required|string|max:255',
+        'product-description' => 'required|string',
+        'product-price' => 'required|numeric',
+        'product-category' => 'required|string',
+    ]);
+
+    $product = new Product();
+    $product->name = $validatedData['product-name'];
+    $product->description = $validatedData['product-description'];
+    $product->price = $validatedData['product-price'];
+    $product->category = $validatedData['product-category'];
+    $product->status = 'pending'; 
+
+    if (Auth::check()) {
+        $product->seller_id = Auth::id(); 
+        $product->user_id = Auth::id(); 
+        $product->seller_name = Auth::user()->name;
+    }
+
+    $product->save();
+
+    return redirect()->route('seller.products')->with('success', 'Товар успешно добавлен.');
+}
+
+
 
     public function changeStatus($id)
 {
@@ -81,4 +84,12 @@ public function sellerDashboard()
 
         return redirect()->back()->with('success', 'Product deleted successfully.');
     }
+
+    public function getProductCatalog()
+{
+    $products = Product::all();
+    $products->load('seller');
+    return view('product_catalog', ['products' => $products]);
+}
+
 }
