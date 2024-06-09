@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
+
 
 class OrderController extends Controller
 {
@@ -23,14 +25,16 @@ class OrderController extends Controller
 
     $order->save();
 
-    return redirect()->route('product.catalog')->with('success', 'Заказ успешно оформлен!');
+    return redirect()->route('my.orders')->with('success', 'Заказ успешно оформлен!');
+
 }
 
 
-    public function myOrders()
+public function myOrders()
 {
-    $orders = Order::where('user_id', auth()->id())->get();
+    $orders = Order::where('user_id', Auth::id())->with('product')->get();
     return view('my_orders', ['orders' => $orders]);
 }
+
 
 }

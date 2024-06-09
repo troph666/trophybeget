@@ -61,12 +61,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/', 'App\Http\Controllers\ExampleController@index');
 Route::get('/seller/products', [SellerDashboardController::class, 'index'])->name('seller.products');
 
-Route::post('/product/add', [ProductController::class, 'addProduct'])->name('product.add');
-Route::post('/admin/products/{id}/changeStatus', [ProductController::class, 'changeStatus'])->name('admin.product.changeStatus');
-Route::patch('/change-status/{id}', 'Admin\ProductController@changeStatus')->name('admin.product.changeStatus');
-Route::post('/admin/product/{id}/approve', 'AdminController@approveProduct')->name('admin.product.approve');
-Route::post('/admin/product/{id}/approve', [AdminController::class, 'approveProduct'])->name('admin.product.approve');
-
 Route::get('/admin/users', 'AdminController@showUsers')->name('admin.users');
 Route::post('/order/create', [OrderController::class, 'store'])->name('order.create');
 Route::get('/catalog', [ProductController::class, 'index'])->name('product.catalog');
@@ -74,6 +68,7 @@ Route::get('/my-orders', function () {
     return view('my_orders');
 })->name('my.orders');
 Route::get('/my-orders', [OrderController::class, 'myOrders'])->name('my.orders');
-
-
-
+Route::post('/admin/product/reject/{id}', [ProductController::class, 'rejectProduct'])->name('admin.product.reject');
+Route::post('/order/create', [OrderController::class, 'store'])->name('order.create')->middleware('auth');
+Route::post('/reject/{id}', 'ProductController@rejectProduct')->name('product.reject');
+Route::post('/product/approve/{id}', 'ProductController@changeStatus')->name('product.approve');

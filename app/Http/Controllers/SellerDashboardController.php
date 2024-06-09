@@ -4,20 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;  
+use App\Models\Product;
 
 class SellerDashboardController extends Controller
 {
     public function __construct()
     {
-        
     }
 
     public function index()
     {
         $user = Auth::user();
-        $products = $user->products; 
+        $products = Product::where('seller_id', $user->id)->get();
 
-        return view('seller.dashboard', compact('products'));
+        return view('seller.seller_products', compact('products'));
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Подвердить товар</title>
+    <title>Admin Product List</title>
     <style>
         .container {
             max-width: 800px;
@@ -36,27 +36,39 @@
         .product button:hover {
             background-color: #45a049;
         }
+
+        .product .reject-button {
+            background-color: #f44336;
+        }
+
+        .product .reject-button:hover {
+            background-color: #e53935;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Список товаров для подтверждения</h1>
-
         @foreach($products as $product)
     <div class="product" id="product_{{ $product->id }}">
-        <h2>{{ $product->name }}</h2>
-        <p>{{ $product->description }}</p>
-        <p>Цена: {{ $product->price }}</p>
-        <p>Категория: {{ $product->category }}</p>
-        <form method="post" action="{{ route('admin.product.approve', $product->id) }}">
-    @csrf
-    <button type="submit">Подтвердить товар</button>
-</form>
-
-
-    </div>
-@endforeach
-
+                <h2>{{ $product->name }}</h2>
+                <p>{{ $product->description }}</p>
+                <p>Цена: {{ $product->price }}</p>
+                <p>Категория: {{ $product->category }}</p>
+                <form method="post" action="{{ route('admin.product.approve', $product->id) }}">
+                    @csrf
+                    <button type="submit">Подтвердить товар</button>
+                </form>
+                <form method="post" action="{{ route('admin.product.reject', $product->id) }}">
+                    @csrf
+                    <div class="form-group">
+                        <label for="rejection_reason">Причина отклонения:</label>
+                        <textarea id="rejection_reason" name="rejection_reason" required></textarea>
+                    </div>
+                    <button type="submit" class="reject-button">Отклонить товар</button>
+                </form>
+            </div>
+        @endforeach
     </div>
 </body>
 </html>

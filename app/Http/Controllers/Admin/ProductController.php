@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -9,75 +8,79 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    
     public function addProduct(Request $request)
-{
-    if (!Auth::check()) {
-        return redirect()->back()->with('error', 'Необходимо войти в систему, чтобы добавить продукт.');
+    {
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'Необходимо войти в систему, чтобы добавить продукт.');
+        }
+    
+        $validatedData = $request->validate([
+            'product-name' => 'required|string|max:255',
+            'product-description' => 'required|string',
+            'product-price' => 'required|numeric',
+            'product-category' => 'required|string',
+        ]);
+    
+        $product = new Product();
+        $product->name = $validatedData['product-name'];
+        $product->description = $validatedData['product-description'];
+        $product->price = $validatedData['product-price'];
+        $product->category = $validatedData['product-category'];
+        $product->status = 'pending';
+    
+        if (Auth::check()) {
+            $product->seller_id = Auth::id();
+            $product->user_id = Auth::id();
+            $product->seller_name = Auth::user()->name;
+        }
+    
+        $product->save();
+    
+        return redirect()->route('seller.products')->with('success', 'Товар успешно добавлен и ожидает подтверждения.');
     }
-
-    $validatedData = $request->validate([
-        'product-name' => 'required|string|max:255',
-        'product-description' => 'required|string',
-        'product-price' => 'required|numeric',
-        'product-category' => 'required|string',
-    ]);
-
-    $product = new Product();
-    $product->name = $validatedData['product-name'];
-    $product->description = $validatedData['product-description'];
-    $product->price = $validatedData['product-price'];
-    $product->category = $validatedData['product-category'];
-    $product->status = 'pending'; 
-
-    if (Auth::check()) {
-        $product->seller_id = Auth::id(); 
-        $product->user_id = Auth::id(); 
-        $product->seller_name = Auth::user()->name;
-    }
-
-    $product->save();
-
-    return redirect()->route('seller.products')->with('success', 'Товар успешно добавлен.');
-}
-
-
+    
 
     public function changeStatus($id)
-{
-    $product = Product::findOrFail($id);
-    $product->status = 'approved'; 
-    $product->save();
+    {
+        $product = Product::findOrFail($id);
+        $product->status = 'approved';
+        $product->save();
 
-    $product->delete();
+        return redirect()->route('admin.products')->with('success', 'Товар подтвержден.');
+    }
 
-    return redirect()->route('seller.products')->with('success', 'Товар подтвержден и удален.');
-}
+    public function rejectProduct(Request $request, $id)
+    {
+        $request->validate([
+            'rejection_reason' => 'required|string',
+        ]);
 
-public function index()
-{
-    $products = Product::all();
-    return view('index', ['products' => $products]);
-}
+        $product = Product::findOrFail($id);
+        $product->status = 'rejected';
+        $product->rejection_reason = $request->rejection_reason;
+        $product->save();
 
+        return redirect()->back()->with('success', 'Товар отклонен и причина отклонения сохранена.');
+    }
 
+    public function index()
+    {
+        $orders = Product::all();
+        return view('my_orders', ['orders' => $orders]);
+    }
 
+    public function sellerDashboard()
+    {
+        $products = Product::where('seller_id', Auth::id())->get();
 
-public function sellerDashboard()
-{
-    $products = Product::where('seller_id', Auth::id())->get();
+        $deletedProductIds = session()->get('deleted_products', []);
 
-    $deletedProductIds = session()->get('deleted_products', []);
+        $products = $products->reject(function ($product) use ($deletedProductIds) {
+            return in_array($product->id, $deletedProductIds);
+        });
 
-    $products = $products->reject(function ($product) use ($deletedProductIds) {
-        return in_array($product->id, $deletedProductIds);
-    });
-
-    return view('seller.seller_products', ['products' => $products]);
-}
-
-
-
+        return view('seller.seller_products', ['products' => $products]);
+    }
 
     public function delete($id)
     {
@@ -94,9 +97,10 @@ public function sellerDashboard()
 
     public function getProductCatalog()
 {
-    $products = Product::all();
+    $products = Product::where('status', 'approved')->get();
     $products->load('seller');
     return view('product_catalog', ['products' => $products]);
 }
+
 
 }

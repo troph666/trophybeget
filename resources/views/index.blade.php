@@ -237,23 +237,22 @@
 <div id="product-list" class="product-list">
     @foreach($products as $product)
     <div class="product-card" data-category="{{ $product->category }}">
-    <h3 class="product-title">{{ $product->name }}</h3>
-    <p class="product-description">{{ $product->description }}</p>
-    <p class="product-price">Цена: {{ $product->price }}</p>
-    <p class="product-category">Категория: {{ $product->category }}</p>
-    <p class="product-seller">Продавец: {{ $product->seller_name }}</p>
-    <form id="order-form" action="{{ route('order.create') }}" method="POST">
-    <form action="{{ route('order.create') }}" method="POST">
-    @csrf
-    <input type="hidden" name="product_id" value="{{ $product->id }}">
-    <input type="hidden" name="product_name" value="{{ $product->name }}">
-    <input type="hidden" name="product_price" value="{{ $product->price }}">
-    <button type="submit">Оформить заказ</button>
-</form>
-
-</div>
+        <h3 class="product-title">{{ $product->name }}</h3>
+        <p class="product-description">{{ $product->description }}</p>
+        <p class="product-price">Цена: {{ $product->price }}</p>
+        <p class="product-category">Категория: {{ $product->category }}</p>
+        <p class="product-seller">Продавец: {{ $product->seller_name }}</p>
+        <form action="{{ route('order.create') }}" method="POST">
+            @csrf
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <input type="hidden" name="product_name" value="{{ $product->name }}">
+            <input type="hidden" name="product_price" value="{{ $product->price }}">
+            <button type="submit">Оформить заказ</button>
+        </form>
+    </div>
     @endforeach
 </div>
+
 
 <script>
 
