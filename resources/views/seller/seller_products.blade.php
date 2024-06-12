@@ -1,6 +1,6 @@
 <div id="seller-products" class="seller-section" style="margin-top: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
     <h3>Добавить товар</h3>
-    <form action="{{ route('product.add') }}" method="POST" class="add-product-form" style="border: 1px solid #ccc; border-radius: 5px; padding: 20px; margin-bottom: 20px; background-color: #f9f9f9;">
+    <form action="{{ route('product.add') }}" method="POST" class="add-product-form" style="border: 1px solid #ccc; border-radius: 5px; padding: 20px; margin-bottom: 20px; background-color: #f9f9f9;" enctype="multipart/form-data">
     @csrf
         <div class="form-group" style="margin-bottom: 15px;">
             <label for="product-name" style="display: block; margin-bottom: 5px;">Название товара:</label>
@@ -13,6 +13,11 @@
         <div class="form-group" style="margin-bottom: 15px;">
             <label for="product-price" style="display: block; margin-bottom: 5px;">Цена:</label>
             <input type="number" id="product-price" name="product-price" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+        </div>
+
+        <div class="form-group">
+            <label for="product-image">Изображение товара:</label>
+            <input type="file" id="product-image" name="product-image">
         </div>
         <div class="form-group" style="margin-bottom: 15px;">
             <label for="product-category" style="display: block; margin-bottom: 5px;">Категория:</label>
@@ -39,6 +44,9 @@
                     <p class="rejection-reason" style="color: red;"><strong>Причина отклонения:</strong> {{ $product->rejection_reason }}</p>
                 @endif
                 <form action="{{ route('product.delete', ['id' => $product->id]) }}" method="POST">
+
+
+
                     @csrf
                     @method('DELETE')
                     <button type="submit" style="background-color: #dc3545; color: #fff; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer; margin-top: 10px;">Удалить товар</button>

@@ -33,6 +33,12 @@ class ProductController extends Controller
             $product->user_id = Auth::id();
             $product->seller_name = Auth::user()->name;
         }
+        if ($request->hasFile('product-image')) {
+            $image = $request->file('product-image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            $product->image = 'images/' . $imageName;
+        }
     
         $product->save();
     

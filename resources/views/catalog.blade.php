@@ -13,19 +13,22 @@
         <button type="submit">Фильтровать</button>
     </form>
     <div id="product-list" class="product-list">
-        @foreach($products as $product)
-            <div class="product-item" data-category="{{ $product->category }}">
-                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-image">
-                <h3 class="product-title">{{ $product->name }}</h3>
-                <p class="product-seller">Продавец: {{ $product->seller_name }}</p>
-                <p class="product-category">Категория: {{ $product->category }}</p>
-                <p class="product-price">Цена: {{ $product->price }} ₽</p>
-                <button class="add-to-cart-button" onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->price }})">Добавить в корзину</button>
-                <button class="order-button" onclick="orderProduct({{ $product->id }}, '{{ $product->name }}', {{ $product->price }})">Оформить заказ</button>
-                <button class="details-button" onclick="showProductDetails({{ $product->id }})">Подробнее</button>
-            </div>
-        @endforeach
-    </div>
-</section>
+    @foreach($products as $product)
+<div class="product-card">
+    <h3 class="product-title">{{ $product->name }}</h3>
+    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
+    <p class="product-description">{{ $product->description }}</p>
+    <p class="product-price">Цена: {{ $product->price }}</p>
+    <p class="product-category">Категория: {{ $product->category }}</p>
+    <p class="product-seller">Продавец: {{ $product->seller_name }}</p>
+    <form action="{{ route('order.create') }}" method="POST">
+        @csrf
+        <input type="hidden" name="product_id" value="{{ $product->id }}">
+        <input type="hidden" name="product_name" value="{{ $product->name }}">
+        <input type="hidden" name="product_price" value="{{ $product->price }}">
+        <button type="submit">Оформить заказ</button>
+    </form>
+</div>
+@endforeach
 
 

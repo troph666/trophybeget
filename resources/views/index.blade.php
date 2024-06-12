@@ -49,8 +49,8 @@
                 </nav>
                 <div id="seller-products" class="seller-section">
                     <h3>Мои товары</h3>
-                    <form action="{{ route('product.add') }}" method="POST" class="add-product-form" style="border: 1px solid #ccc; border-radius: 5px; padding: 20px; margin-bottom: 20px; background-color: #f9f9f9;">
-                        @csrf
+                    <form action="{{ route('product.add') }}" method="POST" class="add-product-form" style="border: 1px solid #ccc; border-radius: 5px; padding: 20px; margin-bottom: 20px; background-color: #f9f9f9;" enctype="multipart/form-data">
+                    @csrf
                         <div class="form-group" style="margin-bottom: 15px;">
                             <label for="product-name" style="display: block; margin-bottom: 5px;">Название товара:</label>
                             <input type="text" id="product-name" name="product-name" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
@@ -63,6 +63,12 @@
                             <label for="product-price" style="display: block; margin-bottom: 5px;">Цена:</label>
                             <input type="number" id="product-price" name="product-price" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
                         </div>
+
+                        <div class="form-group">
+                        <label for="product-image">Изображение товара:</label>
+                        <input type="file" id="product-image" name="product-image">
+                            </div>
+
                         <div class="form-group" style="margin-bottom: 15px;">
                             <label for="product-category" style="display: block; margin-bottom: 5px;">Категория:</label>
                             <select id="product-category" name="product-category" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
@@ -238,6 +244,7 @@
     @foreach($products as $product)
     <div class="product-card" data-category="{{ $product->category }}">
         <h3 class="product-title">{{ $product->name }}</h3>
+        <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
         <p class="product-description">{{ $product->description }}</p>
         <p class="product-price">Цена: {{ $product->price }}</p>
         <p class="product-category">Категория: {{ $product->category }}</p>
