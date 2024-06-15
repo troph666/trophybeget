@@ -11,16 +11,21 @@
 <header>
     <h1>Маркет-плейс</h1>
     <div class="search-bar">
-        <input type="text" placeholder="Поиск...">
+    <form id="search-form" onsubmit="searchProducts(event)">
+        <input type="text" id="search-input" placeholder="Поиск...">
         <button type="submit">Найти</button>
-    </div>
+    </form>
+</div>
+
     <div class="user-actions">
         <a href="#" onclick="showSection('product-catalog'); hideAuth();">Каталог</a>
     </div>
     <div class="auth-buttons">
-        @auth
+    @auth
             @if(Auth::user()->role == 'seller')
                 <a href="#" onclick="showSection('seller-dashboard')">Личный кабинет продавца</a>
+            @elseif(Auth::user()->isAdmin())
+                <a href="#" onclick="showSection('admin-dashboard')">Личный кабинет админа</a>
             @else
                 <a href="#" onclick="showSection('buyer-dashboard')">Личный кабинет покупателя</a>
             @endif
@@ -314,7 +319,22 @@ function hideAuth() {
         })
         .catch(error => console.error('Ошибка блокировки пользователя:', error));
 }
+function searchProducts(event) {
+        event.preventDefault();
+        const searchText = document.getElementById('search-input').value.toLowerCase();
+        const productItems = document.querySelectorAll('.product-card');
 
+        productItems.forEach(item => {
+            const productName = item.querySelector('.product-title').textContent.toLowerCase();
+            const productDescription = item.querySelector('.product-description').textContent.toLowerCase();
+
+            if (productName.includes(searchText) || productDescription.includes(searchText)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
 
 
     function register(event) {
