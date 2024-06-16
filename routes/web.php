@@ -10,8 +10,9 @@ use App\Http\Controllers\SellerDashboardController;
 use App\Http\Controllers\OrderController;
 
 Route::get('/', function () {
-    return view('index');
+    return redirect()->route('catalog');
 });
+
 
 Route::get('/catalog', function () {
     return view('catalog');
@@ -29,10 +30,12 @@ Route::middleware('auth')->group(function () {
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
-
     Route::get('login', [AdminController::class, 'loginForm'])->name('login');
-
     Route::post('login', [AdminController::class, 'login']);
+    Route::get('product/{id}/edit', [ProductController::class, 'edit'])->name('product.edit');
+    Route::patch('product/{id}', [ProductController::class, 'update'])->name('product.update');
+    Route::get('products/{id}/edit', [ProductController::class, 'edit'])->name('admin.product.edit');
+    Route::get('products', [ProductController::class, 'adminProductList'])->name('admin.product.list');
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
@@ -72,3 +75,9 @@ Route::post('/admin/product/reject/{id}', [ProductController::class, 'rejectProd
 Route::post('/order/create', [OrderController::class, 'store'])->name('order.create')->middleware('auth');
 Route::post('/reject/{id}', 'ProductController@rejectProduct')->name('product.reject');
 Route::post('/product/approve/{id}', 'ProductController@changeStatus')->name('product.approve');
+Route::get('admin/product/{id}/edit', [ProductController::class, 'edit'])->name('admin.product.edit');
+
+Route::get('/catalog', [ProductController::class, 'catalog'])->name('catalog');
+
+
+

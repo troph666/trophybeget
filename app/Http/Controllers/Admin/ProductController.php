@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class ProductController extends Controller
             'product-price' => 'required|numeric',
             'product-category' => 'required|string',
         ]);
-    
+
         $product = new Product();
         $product->name = $validatedData['product-name'];
         $product->description = $validatedData['product-description'];
@@ -33,6 +34,7 @@ class ProductController extends Controller
             $product->user_id = Auth::id();
             $product->seller_name = Auth::user()->name;
         }
+    
         if ($request->hasFile('product-image')) {
             $image = $request->file('product-image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
@@ -42,9 +44,8 @@ class ProductController extends Controller
     
         $product->save();
     
-        return redirect()->route('seller.products')->with('success', 'Товар успешно добавлен и ожидает подтверждения.');
+        return redirect()->route('seller.products')->with('success', 'Товар успешно добавлен и ожидает подтверждения администратором.');
     }
-    
 
     public function changeStatus($id)
     {
@@ -102,11 +103,40 @@ class ProductController extends Controller
     }
 
     public function getProductCatalog()
-{
-    $products = Product::where('status', 'approved')->get();
-    $products->load('seller');
-    return view('product_catalog', ['products' => $products]);
-}
+    {
+        $products = Product::where('status', 'approved')->get();
+        $products->load('seller');
+        return view('product_catalog', ['products' => $products]);
+    }
 
+    public function edit($id)
+    {
+        $product = Product::find($id);
+        return view('admin.edit', compact('product'));
+    }
 
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+            'category' => 'required|string',
+        ]);
+
+        $product = Product::findOrFail($id);
+        $product->name = $validatedData['name'];
+        $product->description = $validatedData['description'];
+        $product->price = $validatedData['price'];
+        $product->category = $validatedData['category'];
+        $product->save();
+
+        return redirect()->route('admin.products')->with('success', 'Продукт успешно обновлен.');
+    }
+
+    public function catalog()
+    {
+        $products = Product::where('status', 'approved')->get();
+        return view('index', ['products' => $products]);
+    }
 }

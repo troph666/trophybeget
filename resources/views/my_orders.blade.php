@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-
+<div class="redirect-btn">
+            <a href="{{ route('catalog') }}">Каталог товаров</a>
+        </div>
 <div class="container">
     <h1 class="my-4">Мои заказы</h1>
 

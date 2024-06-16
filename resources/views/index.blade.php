@@ -18,7 +18,7 @@
 </div>
 
     <div class="user-actions">
-        <a href="#" onclick="showSection('product-catalog'); hideAuth();">Каталог</a>
+    <a href="{{ route('catalog') }}">Каталог товаров</a>
     </div>
     <div class="auth-buttons">
     @auth
@@ -77,11 +77,11 @@
                         <div class="form-group" style="margin-bottom: 15px;">
                             <label for="product-category" style="display: block; margin-bottom: 5px;">Категория:</label>
                             <select id="product-category" name="product-category" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-                                <option value="category1">Категория 1</option>
-                                <option value="category2">Категория 2</option>
-                                <option value="category3">Категория 3</option>
-                                <option value="category4">Категория 4</option>
-                                <option value="category5">Категория 5</option>
+                                <option value="category1">Электроника</option>
+                                <option value="category2">Обувь</option>
+                                <option value="category3">Мебель</option>
+                                <option value="category4">Аксессуары</option>
+                                <option value="category5">Автотовары</option>
                             </select>
                         </div>
                         <button type="submit" class="btn-submit" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer;">Добавить товар</button>
@@ -140,11 +140,11 @@
         <label for="category-filter">Категория:</label>
         <select id="category-filter" name="category-filter">
             <option value="all">Все</option>
-            <option value="category1">Категория 1</option>
-            <option value="category2">Категория 2</option>
-            <option value="category3">Категория 3</option>
-            <option value="category4">Категория 4</option>
-            <option value="category5">Категория 5</option>
+            <option value="category1">Электроника</option>
+            <option value="category2">Обувь</option>
+            <option value="category3">Мебель</option>
+            <option value="category4">Аксессуары</option>
+            <option value="category5">Автотовары</option>
         </select>
         <button type="submit">Фильтровать</button>
     </form>
@@ -247,23 +247,22 @@
 
 <div id="product-list" class="product-list">
     @foreach($products as $product)
-    <div class="product-card" data-category="{{ $product->category }}">
-        <h3 class="product-title">{{ $product->name }}</h3>
-        <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
-        <p class="product-description">{{ $product->description }}</p>
-        <p class="product-price">Цена: {{ $product->price }}</p>
-        <p class="product-category">Категория: {{ $product->category }}</p>
-        <p class="product-seller">Продавец: {{ $product->seller_name }}</p>
-        <form action="{{ route('order.create') }}" method="POST">
-            @csrf
-            <input type="hidden" name="product_id" value="{{ $product->id }}">
-            <input type="hidden" name="product_name" value="{{ $product->name }}">
-            <input type="hidden" name="product_price" value="{{ $product->price }}">
-            <button type="submit">Оформить заказ</button>
-        </form>
-    </div>
-    @endforeach
+<div class="product-card">
+    <h3 class="product-title">{{ $product->name }}</h3>
+    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
+    <p class="product-description">{{ $product->description }}</p>
+    <p class="product-price">Цена: {{ $product->price }}</p>
+    <p class="product-category">Категория: {{ $product->category }}</p>
+    <p class="product-seller">Продавец: {{ $product->seller_name }}</p>
+    <form action="{{ route('order.create') }}" method="POST">
+        @csrf
+        <input type="hidden" name="product_id" value="{{ $product->id }}">
+        <input type="hidden" name="product_name" value="{{ $product->name }}">
+        <input type="hidden" name="product_price" value="{{ $product->price }}">
+        <button type="submit">Оформить заказ</button>
+    </form>
 </div>
+@endforeach
 
 
 <script>

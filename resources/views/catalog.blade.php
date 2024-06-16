@@ -4,11 +4,11 @@
         <label for="category-filter">Категория:</label>
         <select id="category-filter" name="category-filter">
             <option value="all">Все</option>
-            <option value="category1">Категория 1</option>
-            <option value="category2">Категория 2</option>
-            <option value="category3">Категория 3</option>
-            <option value="category4">Категория 4</option>
-            <option value="category5">Категория 5</option>
+            <option value="category1">Электроника</option>
+            <option value="category2">Обувь</option>
+            <option value="category3">Мебель</option>
+            <option value="category4">Аксессуары</option>
+            <option value="category5">Автотовары</option>
         </select>
         <button type="submit">Фильтровать</button>
     </form>

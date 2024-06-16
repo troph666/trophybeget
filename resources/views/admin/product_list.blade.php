@@ -5,11 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Product List</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            font-family: Arial, sans-serif;
+        }
+
+        .redirect-btn {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .redirect-btn a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .redirect-btn a:hover {
+            background-color: #1976D2;
         }
 
         .product {
@@ -44,13 +68,24 @@
         .product .reject-button:hover {
             background-color: #e53935;
         }
+
+        .edit-button {
+            background-color: #2196F3;
+        }
+
+        .edit-button:hover {
+            background-color: #1976D2;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="redirect-btn">
+            <a href="{{ route('catalog') }}">Каталог товаров</a>
+        </div>
         <h1>Список товаров для подтверждения</h1>
         @foreach($products as $product)
-    <div class="product" id="product_{{ $product->id }}">
+            <div class="product" id="product_{{ $product->id }}">
                 <h2>{{ $product->name }}</h2>
                 <p>{{ $product->description }}</p>
                 <p>Цена: {{ $product->price }}</p>
@@ -67,6 +102,9 @@
                     </div>
                     <button type="submit" class="reject-button">Отклонить товар</button>
                 </form>
+                <a href="{{ route('admin.product.edit', $product->id) }}">
+                    <button class="edit-button">Редактировать товар</button>
+                </a>
             </div>
         @endforeach
     </div>

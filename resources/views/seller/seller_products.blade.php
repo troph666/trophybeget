@@ -1,5 +1,8 @@
 <div id="seller-products" class="seller-section" style="margin-top: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
     <h3>Добавить товар</h3>
+    <div class="redirect-btn">
+            <a href="{{ route('catalog') }}">Каталог товаров</a>
+        </div>
     <form action="{{ route('product.add') }}" method="POST" class="add-product-form" style="border: 1px solid #ccc; border-radius: 5px; padding: 20px; margin-bottom: 20px; background-color: #f9f9f9;" enctype="multipart/form-data">
     @csrf
         <div class="form-group" style="margin-bottom: 15px;">
@@ -22,11 +25,11 @@
         <div class="form-group" style="margin-bottom: 15px;">
             <label for="product-category" style="display: block; margin-bottom: 5px;">Категория:</label>
             <select id="product-category" name="product-category" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-                <option value="category1">Категория 1</option>
-                <option value="category2">Категория 2</option>
-                <option value="category3">Категория 3</option>
-                <option value="category4">Категория 4</option>
-                <option value="category5">Категория 5</option>
+            <option value="category1">Электроника</option>
+            <option value="category2">Обувь</option>
+            <option value="category3">Мебель</option>
+            <option value="category4">Аксессуары</option>
+            <option value="category5">Автотовары</option>
             </select>
         </div>
         <button type="submit" class="btn-submit" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer;">Добавить товар</button>
@@ -44,8 +47,6 @@
                     <p class="rejection-reason" style="color: red;"><strong>Причина отклонения:</strong> {{ $product->rejection_reason }}</p>
                 @endif
                 <form action="{{ route('product.delete', ['id' => $product->id]) }}" method="POST">
-
-
 
                     @csrf
                     @method('DELETE')
